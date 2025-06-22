@@ -1,0 +1,39 @@
+Para rodar o sistema em computadores diferentes na mesma rede, mantendo o banco de dados acessível apenas a partir da máquina onde o XAMPP (com o MySQL) está instalado, você precisa configurar o servidor Apache para aceitar conexões de outros dispositivos na rede e garantir que o MySQL seja acessado somente pela máquina local. Abaixo, explico passo a passo como configurar isso e garantir que as gravações no banco de dados sejam feitas apenas a partir do servidor (máquina com o XAMPP).
+
+Passos para Configuração
+1. Configurar o Apache para Aceitar Conexões na Rede
+O Apache no XAMPP, por padrão, aceita conexões apenas de localhost. Para permitir que outros computadores na mesma rede acessem o sistema (via index.php ou relatorio.php), você precisa ajustar a configuração do Apache.
+
+Editar o arquivo de configuração do Apache:
+Abra o arquivo C:\xampp\apache\conf\httpd.conf em um editor de texto (como o Bloco de Notas).
+Procure pela seção que contém Listen 80 ou ServerName localhost:80.
+Certifique-se de que o Apache está ouvindo em todas as interfaces de rede. Adicione ou verifique a linha:
+apache
+
+
+
+Listen 0.0.0.0:80
+Procure pela seção <Directory "C:/xampp/htdocs"> e encontre a linha Require local (geralmente dentro de um bloco AllowOverride ou Allow).
+Altere Require local para:
+apache
+
+
+
+Require all granted
+Isso permite que qualquer dispositivo na rede acesse o servidor.
+Reiniciar o Apache:
+Abra o painel de controle do XAMPP, pare e reinicie o módulo Apache.
+Obter o IP da Máquina Servidora:
+Na máquina onde o XAMPP está instalado, abra o Prompt de Comando e digite:
+text
+
+
+
+ipconfig
+Anote o endereço IPv4 da máquina (por exemplo, 192.168.1.100).
+Nos outros computadores da rede, acesse o sistema usando o IP, por exemplo:
+text
+
+
+
+http://192.168.1.100/postodemolas/index.php
